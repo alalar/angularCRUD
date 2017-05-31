@@ -1,9 +1,8 @@
-#Definition
+# AngularCRUD
+
 The idea of this project is to do a simple web page with Angular 2.
 The page will allow us to Create/Remove/Update/Delete (CRUD) users.
 Info will be stored in localStorage
-
-# AngularCRUD
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.6.
 
