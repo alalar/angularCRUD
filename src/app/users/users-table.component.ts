@@ -31,7 +31,7 @@ export class UsersTableComponent implements OnInit {
   public readonly modal: ModalComponent;
 
   private subscription:Subscription;
-  public showFilterBox:boolean=false;
+  public showFilterBox:boolean=true;
  
   public sortedByFieldName:String="userId";
   public ascendingOrder:boolean=true;

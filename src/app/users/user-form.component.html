@@ -1,132 +1,130 @@
 <div *ngIf="user==null" class="alert alert-info ">Loading user info <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></div>
-<div *ngIf="user!=null" class="panel panel-primary">
-    <div class="panel-heading">
+<div *ngIf="user!=null" class="card border-primary">
+    <div class="card-header text-white bg-primary ">
         <span *ngIf="user!=null && user.userId!=null">Editing User {{user.userId}}</span>
         <span *ngIf="user==null || user.userId==null">Adding a new User</span>
     </div>
-    <div class="panel-body">
-        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate >
-            <input type="hidden" formControlName="userId">
-            <div class="form-group has-feedback" [ngClass]="{'has-success': userForm.controls.username.valid,'has-error':!userForm.controls.username.valid}">
-                <label class="control-label" for="username">User Name</label>
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon glyphicon-user" ></span>
-                    </span>
-                    
-                    <input class="form-control" formControlName="username" placeholder="enter a user name">
-                    <span class="glyphicon form-control-feedback" [ngClass]="{'glyphicon-ok': userForm.controls.username.valid,'glyphicon-remove':!userForm.controls.username.valid}"></span>
+    <div class="card-block">
+        <div class="form-group p-2">
+            <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
+                <input type="hidden" formControlName="userId">
+              
+                    <label class="col-form-label" for="username">User Name</label>
+                    <div class="input-group">
+                        <span class="input-group-addon" [ngClass]="{'alert-danger': !userForm.controls.username.valid,'alert-success': userForm.controls.username.valid}">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </span>
+                        <input class="form-control form-control-sm" formControlName="username" placeholder="enter a user name" 
+                            [ngClass]="{'is-invalid':!userForm.controls.username.valid,'is-valid':userForm.controls.username.valid}">
+                    </div>
+                    <div *ngIf="userForm.controls.username.hasError('CheckingDuplicatedItem')" class="alert alert-info ">
+                            <i class="fa fa-cog fa-spin fa-fw"></i><span class="sr-only">Checking userID</span>
+                            Checking if username exists 
+                    </div>
+                    <!-- The hasError method can work with the built in validators but custom validators as well -->
+                    <div *ngIf="userForm.controls.username.hasError('required')" class="validation-error-message">You must include a username.</div>
+                    <div *ngIf="userForm.controls.username.hasError('minlength')" class="validation-error-message">Your username must be at least 5 characters long.</div>
+                    <div *ngIf="userForm.controls.username.hasError('maxlength')" class="validation-error-message">Your username cannot exceed 10 characters.</div>
+                    <div *ngIf="userForm.controls.username.hasError('DuplicatedItem') && userForm.controls.username.value" class="validation-error-message">username already exists</div>
+
+                    <label class="col-form-label" for="name">Full Name</label>
+                    <div class="input-group">
+                        <span class="input-group-addon" [ngClass]="{'alert-danger': !userForm.controls.name.valid,'alert-success': userForm.controls.name.valid}">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </span>
+                        <input class="form-control form-control-sm " formControlName="name" placeholder="enter full name"
+                        [ngClass]="{'is-invalid':!userForm.controls.name.valid,'is-valid':userForm.controls.name.valid}">
+                    </div>
+                    <!-- The hasError method can work with the built in validators but custom validators as well -->
+                    <div *ngIf="userForm.controls.name.hasError('required')" class="validation-error-message">You must include a full name.</div>
+                    <div *ngIf="userForm.controls.name.hasError('minlength')" class="validation-error-message">Your name must be at least 5 characters long.</div>
+                    <div *ngIf="userForm.controls.name.hasError('maxlength')" class="validation-error-message">Your name cannot exceed 10 characters.</div>
+
+                    <label class="col-form-label" for="address">address</label>
+                    <div class="input-group">
+                        <span class="input-group-addon" [ngClass]="{'alert-danger': !userForm.controls.address.valid,'alert-success': userForm.controls.address.valid}">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                        </span>
+                        <input class="form-control form-control-sm " formControlName="address" placeholder="enter an address"
+                        [ngClass]="{'is-invalid':!userForm.controls.address.valid,'is-valid':userForm.controls.address.valid}">
+                    </div>
+                    <!-- The hasError method can work with the built in validators but custom validators as well -->
+                    <div *ngIf="userForm.controls.address.hasError('required')" class="validation-error-message">You must include an address.</div>
+
+                    <label class="col-form-label" for="city">city</label>
+                    <div class="input-group">
+                        <span class="input-group-addon" [ngClass]="{'alert-danger': !userForm.controls.city.valid,'alert-success': userForm.controls.city.valid}">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        </span>
+                        <input class="form-control form-control-sm" formControlName="city" placeholder="enter a city"
+                        [ngClass]="{'is-invalid':!userForm.controls.city.valid,'is-valid':userForm.controls.city.valid}">
+                    </div>
+                    <!-- The hasError method can work with the built in validators but custom validators as well -->
+                    <div *ngIf="userForm.controls.city.hasError('required')" class="validation-error-message">You must include a city.</div>
+
+                    <label class="col-form-label" for="phone">phone</label>
+                    <div class="input-group">
+                        <span class="input-group-addon" [ngClass]="{'alert-danger': !userForm.controls.phone.valid,'alert-success': userForm.controls.phone.valid}">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                        </span>
+                        <input class="form-control form-control-sm" formControlName="phone" placeholder="enter a phone number"
+                        [ngClass]="{'is-invalid':!userForm.controls.phone.valid,'is-valid':userForm.controls.phone.valid}">
+                    </div>
+                    <!-- The hasError method can work with the built in validators but custom validators as well -->
+                    <div *ngIf="userForm.controls.phone.hasError('required')" class="validation-error-message">You must include a phone number.</div>
+                    <div *ngIf="userForm.controls.phone.hasError('pattern') && userForm.controls.phone.value" class="validation-error-message">Phone number is made of 9 digits</div>
+
+                    <label class="col-form-label" for="email">Email</label>
+                    <div class="input-group">
+                        <span class="input-group-addon" [ngClass]="{'alert-danger': !userForm.controls.email.valid,'alert-success': userForm.controls.email.valid}">
+                            @
+                        </span>
+                        <input class="form-control form-control-sm" formControlName="email" placeholder="enter an email"
+                        [ngClass]="{'is-invalid':!userForm.controls.email.valid,'is-valid':userForm.controls.email.valid}">
+                    </div>
+                    <div *ngIf="userForm.controls.email.hasError('CheckingDuplicatedItem')" class="alert alert-info ">Checking if email exists <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></div>
+                    <!-- The hasError method can work with the built in validators but custom validators as well -->
+                    <div *ngIf="userForm.controls.email.hasError('required')" class="validation-error-message">You must include a user email.</div>
+                    <div *ngIf="userForm.controls.email.hasError('email') && userForm.controls.email.value" class="validation-error-message">Your user email is not valid</div>
+                    <div *ngIf="userForm.controls.email.hasError('DuplicatedItem') && userForm.controls.email.value" class="validation-error-message">Email already exists</div>
+
+                    <label class="col-form-label" for="password">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-addon" [ngClass]="{'alert-danger': !userForm.controls.password.valid,'alert-success': userForm.controls.password.valid}">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                        <input type="password" class="form-control form-control-sm" formControlName="password" placeholder="enter a password"
+                        [ngClass]="{'is-invalid':!userForm.controls.password.valid,'is-valid':userForm.controls.password.valid}">
+                    </div>
+                    <!-- The hasError method can work with the built in validators but custom validators as well -->
+                    <div *ngIf="userForm.controls.password.hasError('required')" class="validation-error-message">You must include a password</div>
+                    <div *ngIf="userForm.controls.password.hasError('pattern')" class="validation-error-message">Password length must be at least 8 chars, 1 Uppercase letter, 1 Lowercase letter and 1 digit</div>
+
+                    <label class="col-form-label" for="confirmPassword">Confirm Password</label>
+                    <div class="input-group">
+                        <span class="input-group-addon" [ngClass]="{'alert-danger': !userForm.controls.confirmPassword.valid,'alert-success': userForm.controls.confirmPassword.valid}">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                        <input type="password" class="form-control form-control-sm" formControlName="confirmPassword" placeholder="reenter the password"
+                        [ngClass]="{'is-invalid':!userForm.controls.confirmPassword.valid,'is-valid':userForm.controls.confirmPassword.valid}">
+                    </div>
+                    <!-- The hasError method can work with the built in validators but custom validators as well -->
+                    <div *ngIf="userForm.controls.confirmPassword.hasError('MatchPassword')" class="validation-error-message">Passwords must be identical</div>
+
+                <div *ngFor="let e of errors" class="validation-error-message">
+                    {{e}}
+                </div>     
+                <div class="m-2">
+                    <button type="submit"
+                    [disabled]="!userForm.valid || userForm.pristine" class="btn btn-success">Save
+                    <span *ngIf="submitting" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>    
+                    </button> &nbsp;
+                    <button type="reset" (click)="revert()"
+                    [disabled]="userForm.pristine" class="btn btn-danger">Revert</button>
+                    <button  *ngIf="user!=null && user.userId!=null" type="button" (click)="addNewUser();"
+                        class="pull-right btn btn-warning">New <span class="glyphicon glyphicon glyphicon-user" ></span></button>
                 </div>
-                <div *ngIf="userForm.controls.username.hasError('CheckingDuplicatedItem')" class="alert alert-info ">Checking if username exists <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></div>
-                <!-- The hasError method can work with the built in validators but custom validators as well -->
-                <div *ngIf="userForm.controls.username.hasError('required')" class="alert alert-danger ">You must include a username.</div>
-                <div *ngIf="userForm.controls.username.hasError('minlength')" class="alert alert-danger ">Your username must be at least 5 characters long.</div>
-                <div *ngIf="userForm.controls.username.hasError('maxlength')" class="alert alert-danger ">Your username cannot exceed 10 characters.</div>
-                <div *ngIf="userForm.controls.username.hasError('DuplicatedItem') && userForm.controls.username.value" class="alert alert-danger ">username already exists</div>
-            </div>            
-           <div class="form-group has-feedback" [ngClass]="{'has-success': userForm.controls.name.valid,'has-error':!userForm.controls.name.valid}">
-                <label class="control-label" for="name">Full Name</label>
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon glyphicon-user" ></span>
-                    </span>
-                    
-                    <input class="form-control" formControlName="name" placeholder="enter full name">
-                    <span class="glyphicon form-control-feedback" [ngClass]="{'glyphicon-ok': userForm.controls.name.valid,'glyphicon-remove':!userForm.controls.name.valid}"></span>
-                </div>
-                <!-- The hasError method can work with the built in validators but custom validators as well -->
-                <div *ngIf="userForm.controls.name.hasError('required')" class="alert alert-danger ">You must include a full name.</div>
-                <div *ngIf="userForm.controls.name.hasError('minlength')" class="alert alert-danger ">Your name must be at least 5 characters long.</div>
-                <div *ngIf="userForm.controls.name.hasError('maxlength')" class="alert alert-danger ">Your name cannot exceed 10 characters.</div>
-            </div> 
-             <div class="form-group has-feedback" [ngClass]="{'has-success': userForm.controls.address.valid,'has-error':!userForm.controls.address.valid }">
-                <label class="control-label" for="address">address</label>
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon glyphicon-road" ></span>
-                    </span>
-                    <input class="form-control" formControlName="address" placeholder="enter an address">
-                    <span class="glyphicon form-control-feedback" [ngClass]="{'glyphicon-ok': userForm.controls.address.valid,'glyphicon-remove':!userForm.controls.address.valid}"></span>
-                </div>
-                <!-- The hasError method can work with the built in validators but custom validators as well -->
-                <div *ngIf="userForm.controls.address.hasError('required')" class="alert alert-danger ">You must include an address.</div>
-            </div> 
-            <div class="form-group has-feedback" [ngClass]="{'has-success': userForm.controls.city.valid,'has-error':!userForm.controls.city.valid}">
-                <label class="control-label" for="city">city</label>
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon glyphicon-map-marker" ></span>
-                    </span>
-                    <input class="form-control" formControlName="city" placeholder="enter a city">
-                    <span class="glyphicon form-control-feedback" [ngClass]="{'glyphicon-ok': userForm.controls.city.valid,'glyphicon-remove':!userForm.controls.city.valid}"></span>
-                </div>
-                <!-- The hasError method can work with the built in validators but custom validators as well -->
-                <div *ngIf="userForm.controls.city.hasError('required')" class="alert alert-danger ">You must include a city.</div>
-            </div>   
-            <div class="form-group has-feedback" [ngClass]="{'has-success': userForm.controls.phone.valid,'has-error':!userForm.controls.phone.valid}">
-                <label class="control-label" for="phone">phone</label>
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon glyphicon-phone" ></span>
-                    </span>
-                    <input class="form-control" formControlName="phone" placeholder="enter a phone number">
-                    <span class="glyphicon form-control-feedback" [ngClass]="{'glyphicon-ok': userForm.controls.phone.valid,'glyphicon-remove':!userForm.controls.phone.valid}"></span>
-                </div>
-                <!-- The hasError method can work with the built in validators but custom validators as well -->
-                <div *ngIf="userForm.controls.phone.hasError('required')" class="alert alert-danger ">You must include a phone number.</div>
-                <div *ngIf="userForm.controls.phone.hasError('pattern') && userForm.controls.phone.value" class="alert alert-danger ">Phone number is made of 9 digits</div>
-            </div>                     
-            <div class="form-group has-feedback" [ngClass]="{'has-success': userForm.controls.email.valid,'has-error':!userForm.controls.email.valid}">
-                <label class="control-label" for="email">Email</label>
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        @
-                    </span>
-                    <input class="form-control" formControlName="email" placeholder="enter an email">
-                    <span class="glyphicon form-control-feedback" [ngClass]="{'glyphicon-ok': userForm.controls.email.valid,'glyphicon-remove':!userForm.controls.email.valid}"></span>
-                </div>
-                <div *ngIf="userForm.controls.email.hasError('CheckingDuplicatedItem')" class="alert alert-info ">Checking if email exists <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></div>
-                <!-- The hasError method can work with the built in validators but custom validators as well -->
-                <div *ngIf="userForm.controls.email.hasError('required')" class="alert alert-danger ">You must include a user email.</div>
-                <div *ngIf="userForm.controls.email.hasError('email') && userForm.controls.email.value" class="alert alert-danger ">Your user email is not valid</div>
-                <div *ngIf="userForm.controls.email.hasError('DuplicatedItem') && userForm.controls.email.value" class="alert alert-danger ">Email already exists</div>
-            </div> 
-            <div class="form-group has-feedback" [ngClass]="{'has-success': (userForm.controls.confirmPassword.value == userForm.controls.password.value) && userForm.controls.confirmPassword.value!=null?userForm.controls.confirmPassword.value.length>0:false,'has-error':(userForm.controls.confirmPassword.value != userForm.controls.password.value) || !userForm.controls.password.valid}">
-                <label class="control-label" for="password">Password</label>
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon glyphicon-lock" ></span>
-                    </span>
-                    <input type="password" class="form-control" formControlName="password" placeholder="enter a password">
-                    <span class="glyphicon form-control-feedback" [ngClass]="{'glyphicon-ok': (userForm.controls.confirmPassword.value == userForm.controls.password.value) && userForm.controls.confirmPassword.value!=null?userForm.controls.confirmPassword.value.length>0:false,'glyphicon-remove':(userForm.controls.confirmPassword.value != userForm.controls.password.value)}"></span>
-                </div>
-                <!-- The hasError method can work with the built in validators but custom validators as well -->
-                <div *ngIf="userForm.controls.password.hasError('required')" class="alert alert-danger ">You must include a password</div>
-                <div *ngIf="userForm.controls.password.hasError('pattern')" class="alert alert-danger ">Password length must be at least 8 chars, 1 Uppercase letter, 1 Lowercase letter and 1 digit</div>
-            </div>    
-             <div class="form-group has-feedback" [ngClass]="{'has-success': (userForm.controls.confirmPassword.value == userForm.controls.password.value) && userForm.controls.confirmPassword.value!=null?userForm.controls.confirmPassword.value.length>0:false,'has-error':(userForm.controls.confirmPassword.value != userForm.controls.password.value)}">
-                <label class="control-label" for="confirmPassword">Confirm Password</label>
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon glyphicon-lock" ></span>
-                    </span>
-                    <input type="password" class="form-control" formControlName="confirmPassword" placeholder="reenter the password">
-                    <span class="glyphicon form-control-feedback" [ngClass]="{'glyphicon-ok': (userForm.controls.confirmPassword.value == userForm.controls.password.value) && userForm.controls.confirmPassword.value!=null?userForm.controls.confirmPassword.value.length>0:false,'glyphicon-remove':(userForm.controls.confirmPassword.value != userForm.controls.password.value)}"></span>
-                </div>
-                <!-- The hasError method can work with the built in validators but custom validators as well -->
-                <div *ngIf="userForm.controls.confirmPassword.hasError('MatchPassword')" class="alert alert-danger ">Passwords must be identical</div>
-            </div> 
-            <div *ngFor="let e of errors" class="alert alert-danger ">
-                {{e}}
-            </div>                          
-            <button type="submit"
-            [disabled]="!userForm.valid || userForm.pristine" class="btn btn-success">Save
-            <span *ngIf="submitting" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>    
-            </button> &nbsp;
-            <button type="reset" (click)="revert()"
-            [disabled]="userForm.pristine" class="btn btn-danger">Revert</button>
-            <button  *ngIf="user!=null && user.userId!=null" type="button" (click)="addNewUser();"
-                class="pull-right btn btn-warning">New <span class="glyphicon glyphicon glyphicon-user" ></span></button>
-        </form>
+            </form>
+        </div>
     </div>
 </div>

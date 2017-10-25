@@ -1,86 +1,90 @@
 
-<div  class="panel panel-primary">    
-    <div class="panel-heading">
+<div  class="card border-primary">    
+    <div class="card-header text-white bg-primary ">
         <h3 class="panel-title text-center">Users 
             <button class="btn btn-success btn-xs clickable filter pull-right" data-toggle="tooltip" title="Show Filter" (click)="showFilterBox=!showFilterBox;">
-                &nbsp;<span class="glyphicon glyphicon-filter"></span>&nbsp;
+                &nbsp;<i class="fa fa-filter" aria-hidden="true"></i>&nbsp;
             </button>
         </h3>
     </div>
-    <div class="panel-body" [hidden]="!showFilterBox">
-        
-            <div class="form-group" >
-                <div class="col-sm-11 col-xs-10">
-                    <input type="text" class="form-control" #filterControl (keyup)="0"   placeholder="Enter the text to search"/>
-                </div>
-                <button type="button" class="btn btn-primary col-sm-1 col-xs-1 text-center"><span class="glyphicon glyphicon-search"></span></button>
+    <div class="card-block" [hidden]="!showFilterBox">
+            <div class="input-group col-10 m-2">
+                <input type="text" class="form-control" #filterControl (keyup)="0"   placeholder="Enter the text to search"/>
+                <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary text-center"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </span>
             </div>
-        </div> 
-        <div class="table-responsive">         
-            <table class="table table-striped table-hover">
-                <thead class="thead-inverse">
-                    <th><button class="btn-block btn-link" (click)="sortingByColumn('userId')">ID
-                            <span class="glyphicon  pull-right " 
-                            [ngClass]="{'glyphicon-sort greyText': sortedByFieldName!='userId', 'glyphicon-sort-by-attributes': sortedByFieldName=='userId' && ascendingOrder, 'glyphicon-sort-by-attributes-alt': sortedByFieldName=='userId' && !ascendingOrder}"></span>
+                
+    </div>
+    <div class="table-responsive">         
+        <table class="table">
+            <thead class="thead-inverse">
+                <th  (click)="sortingByColumn('userId')"><button class="btn btn-link" >ID
+                        <i *ngIf="sortedByFieldName=='userId' && !ascendingOrder" class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
+                        <i *ngIf="sortedByFieldName=='userId' && ascendingOrder" class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                </button>
+                </th>
+                <th><button class="btn btn-link" (click)="sortingByColumn('username')">Name
+                        <i *ngIf="sortedByFieldName=='username' && !ascendingOrder" class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
+                        <i *ngIf="sortedByFieldName=='username' && ascendingOrder" class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                    </button>
+                </th>
+                <th><button class="btn btn-link" (click)="sortingByColumn('name')">Full name
+                        <i *ngIf="sortedByFieldName=='name' && !ascendingOrder" class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
+                        <i *ngIf="sortedByFieldName=='name' && ascendingOrder" class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                    </button>
+                </th>
+                <th><button class="btn btn-link" (click)="sortingByColumn('address')">Address
+                        <i *ngIf="sortedByFieldName=='address' && !ascendingOrder" class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
+                        <i *ngIf="sortedByFieldName=='address' && ascendingOrder" class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                    </button>
+                </th>
+                <th><button class="btn btn-link" (click)="sortingByColumn('city')">City
+                        <i *ngIf="sortedByFieldName=='city' && !ascendingOrder" class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
+                        <i *ngIf="sortedByFieldName=='city' && ascendingOrder" class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                    </button>
+                </th>
+                <th><button class="btn btn-link" (click)="sortingByColumn('phone')">Phone
+                        <i *ngIf="sortedByFieldName=='phone' && !ascendingOrder" class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
+                        <i *ngIf="sortedByFieldName=='phone' && ascendingOrder" class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                    </button>
+                </th>
+                <th><button class="btn btn-link" (click)="sortingByColumn('email')">Email
+                        <i *ngIf="sortedByFieldName=='email' && !ascendingOrder" class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
+                        <i *ngIf="sortedByFieldName=='email' && ascendingOrder" class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                    </button>
+                </th>
+                <th></th>
+            </thead>
+            <tbody *ngIf="users==null">
+                <tr>
+                    <td colspan=8 class="alert alert-info text-center">
+                        Loading users info <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="users!=null || true" >
+                <tr *ngFor='let user of users | async | filterby : filterControl.value | sortby : sortedByFieldName : ascendingOrder'>
+                    <td>{{user.userId}}</td>
+                    <td>{{user.username}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.address}}</td>
+                    <td>{{user.city}}</td>
+                    <td>{{user.phone}}</td>
+                    <td>{{user.email}}</td>
+                    <td>
+                        <button type="button" class="btn btn-link" title="edit" (click)="userFormTableService.editingItem(user.userId)" >
+                                <i class="fa fa-edit text-green" aria-hidden="true"></i>
                         </button>
-                    </th>
-                    <th><button class="btn-block btn-link" (click)="sortingByColumn('username')">Name
-                            <span class="glyphicon  pull-right " 
-                            [ngClass]="{'glyphicon-sort greyText': sortedByFieldName!='username', 'glyphicon-sort-by-attributes': sortedByFieldName=='username' && ascendingOrder, 'glyphicon-sort-by-attributes-alt': sortedByFieldName=='username' && !ascendingOrder}"></span>
+                        <button type="button" class="btn btn-link text-red" title="remove" (click)="showRemoveModalDlg(user)"> 
+                                <i class="fa fa-remove" aria-hidden="true"></i>
                         </button>
-                    </th>
-                    <th><button class="btn-block btn-link" (click)="sortingByColumn('name')">Full name
-                        <span class="glyphicon  pull-right " 
-                            [ngClass]="{'glyphicon-sort greyText': sortedByFieldName!='name', 'glyphicon-sort-by-attributes': sortedByFieldName=='name' && ascendingOrder, 'glyphicon-sort-by-attributes-alt': sortedByFieldName=='name' && !ascendingOrder}"></span>
-                        </button>
-                    </th>
-                    <th><button class="btn-block btn-link" (click)="sortingByColumn('address')">Address
-                        <span class="glyphicon  pull-right " 
-                            [ngClass]="{'glyphicon-sort greyText': sortedByFieldName!='address', 'glyphicon-sort-by-attributes': sortedByFieldName=='address' && ascendingOrder, 'glyphicon-sort-by-attributes-alt': sortedByFieldName=='address' && !ascendingOrder}"></span>
-                        </button>
-                    </th>
-                    <th><button class="btn-block btn-link" (click)="sortingByColumn('city')">City
-                        <span class="glyphicon  pull-right " 
-                            [ngClass]="{'glyphicon-sort greyText': sortedByFieldName!='city', 'glyphicon-sort-by-attributes': sortedByFieldName=='city' && ascendingOrder, 'glyphicon-sort-by-attributes-alt': sortedByFieldName=='city' && !ascendingOrder}"></span>
-                        </button>
-                    </th>
-                    <th><button class="btn-block btn-link" (click)="sortingByColumn('phone')">Phone
-                        <span class="glyphicon  pull-right " 
-                            [ngClass]="{'glyphicon-sort greyText': sortedByFieldName!='phone', 'glyphicon-sort-by-attributes': sortedByFieldName=='phone' && ascendingOrder, 'glyphicon-sort-by-attributes-alt': sortedByFieldName=='phone' && !ascendingOrder}"></span>
-                        </button>
-                    </th>
-                    <th><button class="btn-block btn-link" (click)="sortingByColumn('email')">Email
-                        <span class="glyphicon  pull-right " 
-                            [ngClass]="{'glyphicon-sort greyText': sortedByFieldName!='email', 'glyphicon-sort-by-attributes': sortedByFieldName=='email' && ascendingOrder, 'glyphicon-sort-by-attributes-alt': sortedByFieldName=='email' && !ascendingOrder}"></span>
-                        </button>
-                    </th>
-                    <th></th>
-                </thead>
-                <tbody *ngIf="users==null">
-                    <tr>
-                        <td colspan=8 class="alert alert-info text-center">
-                            Loading users info <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody *ngIf="users!=null || true" >
-                    <tr *ngFor='let user of users | async | filterby : filterControl.value | sortby : sortedByFieldName : ascendingOrder'>
-                        <td>{{user.userId}}</td>
-                        <td>{{user.username}}</td>
-                        <td>{{user.name}}</td>
-                        <td>{{user.address}}</td>
-                        <td>{{user.city}}</td>
-                        <td>{{user.phone}}</td>
-                        <td>{{user.email}}</td>
-                        <td>
-                            <button type="button" class="btn btn-link" title="edit" (click)="userFormTableService.editingItem(user.userId)" ><span role="button" aria-hidden="true" class="glyphicon glyphicon glyphicon-pencil" ></span></button>
-                            <button type="button" class="btn btn-link" title="remove" (click)="showRemoveModalDlg(user)">  <span class="text-danger glyphicon glyphicon glyphicon-remove" ></span></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            
-        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
 </div>
      <app-modal>
     </app-modal>
