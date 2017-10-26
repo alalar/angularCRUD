@@ -67,15 +67,15 @@ export class UsersTableComponent implements OnInit {
     public showRemoveModalDlg(userToRemove:User){
        let infoTemplate= `
             Do you want to remove user <strong> ${userToRemove.username} </strong> ?
-             <dl class="dl-horizontal">
-                    <dt><span class="glyphicon glyphicon glyphicon-user" ></span></dt>
-                    <dd>${userToRemove.name}</dd>
-                    <dt><span class="glyphicon glyphicon glyphicon-map-marker" ></span></dt>
-                    <dd>${userToRemove.address} , ${userToRemove.city}</dd>
-                    <dt><span class="glyphicon glyphicon glyphicon-phone" ></span></dt>
-                    <dd>${userToRemove.phone}</dd>
-                    <dt><span>@</span></dt>
-                    <dd>${userToRemove.email}</dd>
+             <dl class="row">
+                    <dt class="col-1 text-right"><i class="fa fa-user" aria-hidden="true"></i></dt>
+                    <dd class="col-11">${userToRemove.name}</dd>
+                    <dt class="col-1"><i class="fa fa-home" aria-hidden="true"></i></dt>
+                    <dd class="col-11">${userToRemove.address} , ${userToRemove.city}</dd>
+                    <dt class="col-1"><i class="fa fa-phone" aria-hidden="true"></i></dt>
+                    <dd class="col-11">${userToRemove.phone}</dd>
+                    <dt class="col-1"><span>@</span></dt>
+                    <dd class="col-11">${userToRemove.email}</dd>
             </dl>`
         this.modal.show('Removing users',infoTemplate);
         this.subscription = this.modal.blnResult.subscribe((blnRemove:boolean) => {

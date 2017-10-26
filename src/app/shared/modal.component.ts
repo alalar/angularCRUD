@@ -1,17 +1,19 @@
 import { Component, Output } from '@angular/core';
 import {Subject} from 'rxjs/Subject';
-//import {Observable} from 'rxjs/Observable';
+
+declare var $ :any;
 
 @Component({
   selector: 'app-modal',
   template: `
-  <div (click)="onContainerClicked($event)" class="modal fade" tabindex="-1" [ngClass]="{'in': visibleAnimate}"
-       [ngStyle]="{'display': visible ? 'block' : 'none', 'opacity': visibleAnimate ? 1 : 0}">
+  <div (click)="onContainerClicked($event)" class="modal fade" [ngClass]="{'show': visibleAnimate}" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content" >
         <div class="modal-header" >
-            <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
           <h4 >{{modalHeader}}</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
         <div class="modal-body" [innerHTML]=modalBody>
         </div>
@@ -27,11 +29,7 @@ import {Subject} from 'rxjs/Subject';
 export class ModalComponent {
 
     private clickStream = new Subject<boolean>();
-    //private clickStream = new Observable<boolean>();
     @Output() blnResult = this.clickStream.asObservable();
-    //@Output() observable = this.clickStream;
-  public visible = false;
-  private visibleAnimate = true;
 
   public modalHeader:string;
   public modalBody:string;
@@ -39,22 +37,18 @@ export class ModalComponent {
   public show(strHeader:string,strBody:string): void {
     this.modalHeader = strHeader;
     this.modalBody = strBody;
-    this.visible = true;
-    setTimeout(() => this.visibleAnimate = true, 100);
+    $('div.modal').modal('show');
   }
 
   public hide(): void {
-    this.visibleAnimate = false;
-    setTimeout(() => this.visible = false, 300);
+    $('div.modal').modal('hide');
   }
   public doit() {
-       //this.clickStream = new Observable((observer:any)  => observer.next(true));
        this.clickStream.next(true);
        this.hide();
   }
   public nodoit() {
        this.clickStream.next(false);
-      //this.clickStream = new Observable((observer:any)  => observer.next(false));
        this.hide();
   }
 

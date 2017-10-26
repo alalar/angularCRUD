@@ -34,7 +34,7 @@ const appRoutes: Routes = [
 @NgModule({
   imports:      [
     BrowserModule,
-    ReactiveFormsModule ,
+    ReactiveFormsModule, 
     HttpModule,
     InMemoryWebApiModule.forRoot(InMemoryDataService,{ delay: 1000 }),
     //RouterModule.forRoot(appRoutes)
